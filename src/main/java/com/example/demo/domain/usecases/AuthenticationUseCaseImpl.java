@@ -1,6 +1,5 @@
 package com.example.demo.domain.usecases;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +12,19 @@ import com.example.demo.domain.repositories.UserRepository;
 @Service
 public class AuthenticationUseCaseImpl implements AuthenticationUseCase {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    /**
+     * AuthenticationUseCaseImplのコンストラクターです。
+     *
+     * @param userRepository ユーザーレポジトリのインスタンス
+     * @param passwordEncoder パスワードエンコーダーのインスタンス
+     */
+    public AuthenticationUseCaseImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     /**
      * 指定されたメールアドレスとパスワードを使って、ユーザーの認証を行います。

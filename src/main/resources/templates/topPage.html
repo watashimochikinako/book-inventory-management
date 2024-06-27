@@ -10,9 +10,13 @@
 <body>
     <div th:if="${loggedIn}">
         <p th:text="'Welcome, ' + ${username} + '! Hello World'"></p>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Logout</button>
+        </form>
     </div>
     <div th:unless="${loggedIn}">
         <p>Hello World</p>
+        <a th:href="@{/toLogin}"><button>Login</button></a>
     </div>
 </body>
 

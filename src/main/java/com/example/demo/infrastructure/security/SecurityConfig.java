@@ -1,6 +1,5 @@
 package com.example.demo.infrastructure.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -20,11 +19,19 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+    private final AuthenticationProvider authenticationProvider;
 
-    @Autowired
-    private AuthenticationProvider authenticationProvider;
+    /**
+     * SecurityConfigのコンストラクターです。
+     *
+     * @param userDetailsService     ユーザーの詳細情報を取得するためのサービス
+     * @param authenticationProvider 認証プロバイダー
+     */
+    public SecurityConfig(UserDetailsService userDetailsService, AuthenticationProvider authenticationProvider) {
+        this.userDetailsService = userDetailsService;
+        this.authenticationProvider = authenticationProvider;
+    }
 
     /**
      * パスワードのエンコーダーをBeanとして登録します。
