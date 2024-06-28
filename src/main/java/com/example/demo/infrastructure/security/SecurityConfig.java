@@ -2,11 +2,9 @@ package com.example.demo.infrastructure.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,18 +17,16 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final UserDetailsService userDetailsService;
-    private final AuthenticationProvider authenticationProvider;
+    private final UserDetailsServiceImpl userDetailsService;
 
     /**
      * SecurityConfigのコンストラクターです。
      *
      * @param userDetailsService     ユーザーの詳細情報を取得するためのサービス
-     * @param authenticationProvider 認証プロバイダー
+     * @param customAuthenticationProvider カスタムの認証プロバイダー
      */
-    public SecurityConfig(UserDetailsService userDetailsService, AuthenticationProvider authenticationProvider) {
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
-        this.authenticationProvider = authenticationProvider;
     }
 
     /**
@@ -80,7 +76,6 @@ public class SecurityConfig {
                         .maximumSessions(1) // 同一ユーザーで複数のセッションを許可しない場合
                         .expiredUrl("/toLogin?expired=true"));
 
-        http.authenticationProvider(authenticationProvider);
         http.userDetailsService(userDetailsService);
 
         return http.build();

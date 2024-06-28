@@ -1,4 +1,4 @@
-package com.example.demo.domain.usecases;
+package com.example.demo.application.usecases;
 
 /**
  * 認証に関するユースケースのインターフェースです。

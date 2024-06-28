@@ -1,4 +1,4 @@
-package com.example.demo.domain.usecases;
+package com.example.demo.application.usecases;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,12 @@ public class AuthenticationUseCaseImpl implements AuthenticationUseCase {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
+    
     /**
-     * AuthenticationUseCaseImplのコンストラクターです。
+     * AuthenticationUseCaseImplのコンストラクタです。
      *
-     * @param userRepository ユーザーレポジトリのインスタンス
-     * @param passwordEncoder パスワードエンコーダーのインスタンス
+     * @param userRepository UserRepositoryのインスタンス
+     * @param passwordEncoder PasswordEncoderのインスタンス
      */
     public AuthenticationUseCaseImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
