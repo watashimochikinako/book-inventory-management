@@ -15,11 +15,6 @@ public class AuthController {
 
     private final AuthenticationUseCase authenticationUseCase;
 
-    @ModelAttribute
-    public UserLoginForm setUsetLoginForm() {
-        return new UserLoginForm();
-    }
-
     /**
      * AuthControllerのコンストラクターです。
      *
@@ -27,6 +22,11 @@ public class AuthController {
      */
     public AuthController(AuthenticationUseCase authenticationUseCase) {
         this.authenticationUseCase = authenticationUseCase;
+    }
+
+    @ModelAttribute
+    public UserLoginForm setUsetLoginForm() {
+        return new UserLoginForm();
     }
 
     @GetMapping("/toLogin")

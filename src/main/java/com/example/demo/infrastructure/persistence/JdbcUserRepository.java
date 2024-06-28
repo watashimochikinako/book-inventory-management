@@ -1,6 +1,5 @@
 package com.example.demo.infrastructure.persistence;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,6 +15,17 @@ import com.example.demo.domain.repositories.UserRepository;
 @Repository
 public class JdbcUserRepository implements UserRepository {
 
+    private final NamedParameterJdbcTemplate template;
+
+    /**
+     * JdbcUserRepositoryのコンストラクターです。
+     *
+     * @param template NamedParameterJdbcTemplateのインスタンス
+     */
+    public JdbcUserRepository(NamedParameterJdbcTemplate template) {
+        this.template = template;
+    }
+
     /**
      * ユーザーエンティティのRowMapperです。
      * ResultSetからユーザーエンティティにマッピングします。
@@ -28,9 +38,6 @@ public class JdbcUserRepository implements UserRepository {
         user.setPassword(rs.getString("password"));
         return user;
     };
-
-    @Autowired
-    private NamedParameterJdbcTemplate template;
 
     /**
      * 指定されたメールアドレスを持つユーザーをデータベースから検索します。

@@ -1,6 +1,5 @@
 package com.example.demo.infrastructure.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,8 +16,16 @@ import com.example.demo.domain.repositories.UserRepository;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    /**
+     * UserDetailsServiceImplのコンストラクターです。
+     *
+     * @param userRepository ユーザーリポジトリのインスタンス
+     */
+    public UserDetailsServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     /**
      * 指定されたメールアドレスを持つユーザーの詳細を取得します。
