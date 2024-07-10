@@ -4,7 +4,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.application.usecases.AuthenticationUseCase;
@@ -24,13 +23,8 @@ public class AuthController {
         this.authenticationUseCase = authenticationUseCase;
     }
 
-    @ModelAttribute
-    public UserLoginForm setUsetLoginForm() {
-        return new UserLoginForm();
-    }
-
     @GetMapping("/toLogin")
-    public String loginPage(Model model) {
+    public String toLoginPage(Model model) {
         model.addAttribute("loginForm", new UserLoginForm());
         return "login";
     }

@@ -53,6 +53,8 @@ public class SecurityConfig {
                         "/toLogin",
                         "/login",
                         "/topPage",
+                        "/register",
+                        "/toRegister",
                         "/css/**",
                         "/js/**",
                         "/img/**")

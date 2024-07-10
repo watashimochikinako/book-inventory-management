@@ -4,23 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Document</title>
 </head>
 
 <body>
-    <!-- login.html -->
-    <form th:action="@{/login}" th:object="${loginForm}" method="post">
+    <!-- resister.html -->
+    <form th:action="@{/register}" th:object="${userRegisterForm}" method="post">
         <div>
-            <label for="email">Email:</label>
+            <label for="name">名前:</label>
+            <input type="text" id="name" name="name" th:field="*{name}" required />
+        </div>
+        <div>
+            <label for="email">メールアドレス:</label>
             <input type="text" id="email" name="email" th:field="*{email}" required />
         </div>
         <div>
-            <label for="password">Password:</label>
+            <label for="password">パスワード:</label>
             <input type="password" id="password" name="password" th:field="*{password}" required />
         </div>
-        <button type="submit">ログイン</button>
+        <button type="submit">登録</button>
     </form>
-    <a th:href="@{/toRegister}">ユーザー登録</a>
 </body>
 
 </html>

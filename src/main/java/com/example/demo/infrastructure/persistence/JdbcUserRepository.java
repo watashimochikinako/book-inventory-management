@@ -1,6 +1,7 @@
 package com.example.demo.infrastructure.persistence;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -47,9 +48,8 @@ public class JdbcUserRepository implements UserRepository {
      */
     @Override
     public User findByEmail(String email) {
-        String sql = "SELECT * FROM users WHERE email=:email";
-
         SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
+        String sql = "SELECT * FROM users WHERE email=:email";
 
         try {
             // SQLクエリを実行し、結果をユーザーエンティティにマッピングして返す
@@ -59,5 +59,39 @@ public class JdbcUserRepository implements UserRepository {
             // 例外が発生した場合はnullを返す
             return null;
         }
+    }
+
+    /**
+     * 指定されたメールアドレスを持つユーザーがデータベースに存在するかどうかを確認します。
+     *
+     * @param email ユーザーのメールアドレス
+     * @return ユーザーが存在する場合は true、存在しない場合は false
+     */
+    @Override
+    public boolean existsByEmail(String email) {
+        SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
+        String sql = "SELECT COUNT(*) FROM users WHERE email = :email";
+
+        int count = template.queryForObject(sql, param, Integer.class);
+        return count > 0;
+    }
+
+    /**
+     * 新しいユーザーをデータベースに挿入します。
+     *
+     * @param user 挿入するユーザー情報
+     * @return 挿入が成功した場合は true、失敗した場合は false
+     */
+    @Override
+    public boolean insert(User user) {
+        SqlParameterSource param = new BeanPropertySqlParameterSource(user);
+        String sql = "INSERT INTO users (name, email, password) "
+                + "VALUES (:name, :email, :password)";
+
+        // ユーザー情報を挿入
+        int rowsAffected = template.update(sql, param);
+
+        // 挿入の結果を確認し、成功したかどうかを返す
+        return rowsAffected > 0;
     }
 }
