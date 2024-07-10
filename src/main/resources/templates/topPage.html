@@ -8,7 +8,6 @@
 </head>
 
 <body>
-    <!-- topPage.html -->
     <div th:if="${loggedIn}">
         <p th:text="'Welcome, ' + ${username} + '! Hello World'"></p>
         <a th:href="@{/logout}">ログアウト</a>

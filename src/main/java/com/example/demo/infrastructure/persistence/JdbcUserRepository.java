@@ -73,6 +73,8 @@ public class JdbcUserRepository implements UserRepository {
         String sql = "SELECT COUNT(*) FROM users WHERE email = :email";
 
         int count = template.queryForObject(sql, param, Integer.class);
+
+        // 挿入の結果を確認し、成功したかどうかを返す
         return count > 0;
     }
 

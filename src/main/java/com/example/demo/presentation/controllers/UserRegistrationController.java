@@ -8,24 +8,45 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.application.usecases.UserRegistrationUseCase;
 import com.example.demo.presentation.forms.UserRegisterForm;
 
+/**
+ * ユーザー登録に関するコントローラです。
+ */
 @Controller
 public class UserRegistrationController {
 
     private final UserRegistrationUseCase userRegistrationUseCase;
 
+    /**
+     * UserRegistrationControllerのコンストラクターです。
+     *
+     * @param userRegistrationUseCase ユーザー登録ユースケースのインスタンス
+     */
     public UserRegistrationController(UserRegistrationUseCase userRegistrationUseCase) {
         this.userRegistrationUseCase = userRegistrationUseCase;
     }
 
+    /**
+     * 登録ページへの遷移を処理します。
+     *
+     * @param model モデルオブジェクト
+     * @return 登録ページのビュー名
+     */
     @GetMapping("/toRegister")
     public String toRegisterPage(Model model) {
         model.addAttribute("userRegisterForm", new UserRegisterForm());
         return "register";
     }
 
+    /**
+     * ユーザーの登録処理を行います。
+     *
+     * @param userRegisterForm ユーザー登録フォームオブジェクト
+     * @param model モデルオブジェクト
+     * @return 登録成功時はログインページへリダイレクト、失敗時は再度登録ページを表示
+     */
     @PostMapping("/register")
     public String registerUser(UserRegisterForm userRegisterForm, Model model) {
-        // ユーザ登録処理の実行
+        // ユーザー登録処理の実行
         boolean isRegistered = userRegistrationUseCase.register(
                 userRegisterForm.getName(),
                 userRegisterForm.getEmail(),
