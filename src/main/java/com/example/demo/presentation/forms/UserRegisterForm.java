@@ -1,5 +1,8 @@
 package com.example.demo.presentation.forms;
 
+/**
+ * ユーザーの登録フォームのデータを保持するクラスです。
+ */
 public class UserRegisterForm {
 
     private String name;

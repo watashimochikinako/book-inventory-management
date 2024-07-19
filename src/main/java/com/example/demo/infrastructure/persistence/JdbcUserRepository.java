@@ -1,5 +1,7 @@
 package com.example.demo.infrastructure.persistence;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -44,20 +46,22 @@ public class JdbcUserRepository implements UserRepository {
      * 指定されたメールアドレスを持つユーザーをデータベースから検索します。
      *
      * @param email 検索するユーザーのメールアドレス
-     * @return メールアドレスに対応するユーザーエンティティ、存在しない場合はnull
+     * @return メールアドレスに対応するユーザーエンティティ、存在しない場合は null
      */
     @Override
     public User findByEmail(String email) {
         SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
-        String sql = "SELECT * FROM users WHERE email=:email";
+        String sql = "SELECT * FROM users WHERE email = :email";
 
         try {
             // SQLクエリを実行し、結果をユーザーエンティティにマッピングして返す
-            User user = template.queryForObject(sql, param, USER_ROW_MAPPER);
-            return user;
-        } catch (Exception e) {
-            // 例外が発生した場合はnullを返す
+            return template.queryForObject(sql, param, USER_ROW_MAPPER);
+        } catch (EmptyResultDataAccessException e) {
+            // 結果が見つからない場合、null を返す
             return null;
+        } catch (DataAccessException e) {
+            // その他のデータアクセス例外処理（ログ出力など）
+            throw e;
         }
     }
 
@@ -73,8 +77,6 @@ public class JdbcUserRepository implements UserRepository {
         String sql = "SELECT COUNT(*) FROM users WHERE email = :email";
 
         int count = template.queryForObject(sql, param, Integer.class);
-
-        // 挿入の結果を確認し、成功したかどうかを返す
         return count > 0;
     }
 
@@ -87,28 +89,30 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     public boolean insert(User user) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(user);
-        String sql = "INSERT INTO users (name, email, password) "
-                + "VALUES (:name, :email, :password)";
+        String sql = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
 
-        // ユーザー情報を挿入
+        // ユーザー情報を挿入し、成功したかどうかを返す
         int rowsAffected = template.update(sql, param);
-
-        // 挿入の結果を確認し、成功したかどうかを返す
         return rowsAffected > 0;
     }
 
+    /**
+     * ユーザー情報をデータベースにアップデートします。
+     * メールアドレスが既に存在する場合は、ユーザー情報を更新します。
+     *
+     * @param user 更新するユーザー情報
+     * @return アップデートが成功した場合は true、失敗した場合は false
+     */
     @Override
     public boolean update(User user) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(user);
         String sql = "INSERT INTO users (name, email, password) "
-               + "VALUES (:name, :email, :password) "
-               + "ON CONFLICT (email) DO UPDATE "
-               + "SET name = EXCLUDED.name, password = EXCLUDED.password";
+                + "VALUES (:name, :email, :password) "
+                + "ON CONFLICT (email) DO UPDATE "
+                + "SET name = EXCLUDED.name, password = EXCLUDED.password";
 
-        // ユーザー情報を挿入
+        // ユーザー情報を挿入または更新し、成功したかどうかを返す
         int rowsAffected = template.update(sql, param);
-
-        // 挿入の結果を確認し、成功したかどうかを返す
         return rowsAffected > 0;
     }
 }

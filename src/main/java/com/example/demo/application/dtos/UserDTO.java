@@ -1,5 +1,8 @@
 package com.example.demo.application.dtos;
 
+/**
+ * ユーザーのデータ転送オブジェクト（DTO）を表すクラスです。
+ */
 public class UserDTO {
 
     private Integer id;

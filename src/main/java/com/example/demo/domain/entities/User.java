@@ -1,14 +1,13 @@
 package com.example.demo.domain.entities;
 
+/**
+ * ユーザーエンティティを表すクラスです。
+ */
 public class User {
 
-    // ID
     private Integer id;
-    // ユーザー氏名
     private String name;
-    // パスワード
     private String password;
-    // メールアドレス
     private String email;
 
     public User() {

@@ -1,5 +1,8 @@
 package com.example.demo.presentation.forms;
 
+/**
+ * ユーザーの更新フォームのデータを保持するクラスです。
+ */
 public class UserUpdateFrom {
 
     private String name;
