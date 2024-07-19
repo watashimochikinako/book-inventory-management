@@ -96,4 +96,19 @@ public class JdbcUserRepository implements UserRepository {
         // 挿入の結果を確認し、成功したかどうかを返す
         return rowsAffected > 0;
     }
+
+    @Override
+    public boolean update(User user) {
+        SqlParameterSource param = new BeanPropertySqlParameterSource(user);
+        String sql = "INSERT INTO users (name, email, password) "
+               + "VALUES (:name, :email, :password) "
+               + "ON CONFLICT (email) DO UPDATE "
+               + "SET name = EXCLUDED.name, password = EXCLUDED.password";
+
+        // ユーザー情報を挿入
+        int rowsAffected = template.update(sql, param);
+
+        // 挿入の結果を確認し、成功したかどうかを返す
+        return rowsAffected > 0;
+    }
 }

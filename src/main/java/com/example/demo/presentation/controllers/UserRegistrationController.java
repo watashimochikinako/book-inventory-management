@@ -34,7 +34,7 @@ public class UserRegistrationController {
     @GetMapping("/toRegister")
     public String toRegisterPage(Model model) {
         model.addAttribute("userRegisterForm", new UserRegisterForm());
-        return "register";
+        return "user-register";
     }
 
     /**
@@ -57,7 +57,7 @@ public class UserRegistrationController {
             return "redirect:/login"; // 登録成功時のリダイレクト
         } else {
             model.addAttribute("error", true);
-            return "register"; // 登録失敗時は登録ページを再表示
+            return "user-register"; // 登録失敗時は登録ページを再表示
         }
     }
 }

@@ -49,7 +49,7 @@ public class AuthController {
     public String login(UserLoginForm loginForm, Model model) {
         boolean isAuthenticated = authenticationUseCase.authenticate(loginForm.getEmail(), loginForm.getPassword());
         if (isAuthenticated) {
-            return "redirect:/topPage";
+            return "redirect:/top";
         } else {
             model.addAttribute("error", true);
             return "login";
@@ -63,7 +63,7 @@ public class AuthController {
      * @param authentication 認証オブジェクト
      * @return トップページのビュー名
      */
-    @GetMapping("/topPage")
+    @GetMapping("/top")
     public String topPage(Model model, Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName(); // ログインユーザーの名前を取得
@@ -72,6 +72,6 @@ public class AuthController {
         } else {
             model.addAttribute("loggedIn", false);
         }
-        return "topPage";
+        return "top";
     }
 }

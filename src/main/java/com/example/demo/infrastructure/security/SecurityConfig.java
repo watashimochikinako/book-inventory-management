@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .requestMatchers(
                         "/toLogin",
                         "/login",
-                        "/topPage",
+                        "/top",
                         "/register",
                         "/toRegister",
                         "/css/**",
@@ -64,13 +64,13 @@ public class SecurityConfig {
                 .loginPage("/toLogin")
                 .loginProcessingUrl("/login")
                 .failureUrl("/toLogin?error=true")
-                .defaultSuccessUrl("/topPage", true)
+                .defaultSuccessUrl("/top", true)
                 .usernameParameter("email")
                 .passwordParameter("password"));
 
         http.logout((logout) -> logout
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/topPage")
+                .logoutSuccessUrl("/top")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true))
                 .sessionManagement(session -> session

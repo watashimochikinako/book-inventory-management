@@ -30,4 +30,12 @@ public interface UserRepository {
      * @return 挿入が成功した場合は true、失敗した場合は false
      */
     boolean insert(User user);
+
+    /**
+     * ユーザー情報を更新します。
+     *
+     * @param user 挿入するユーザー情報
+     * @return 挿入が成功した場合は true、失敗した場合は false
+     */
+    boolean update(User user);
 }

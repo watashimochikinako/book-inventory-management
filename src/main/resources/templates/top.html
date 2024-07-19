@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>トップページ</title>
 </head>
 
 <body>
     <div th:if="${loggedIn}">
         <p th:text="'Welcome, ' + ${username} + '! Hello World'"></p>
+        <a th:href="@{/user-profile}">プロファイル</a>
         <a th:href="@{/logout}">ログアウト</a>
     </div>
     <div th:unless="${loggedIn}">
