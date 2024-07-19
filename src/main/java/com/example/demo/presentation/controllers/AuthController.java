@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.application.usecases.AuthenticationUseCase;
+import com.example.demo.application.services.AuthenticationService;
 import com.example.demo.presentation.forms.UserLoginForm;
 
 /**
@@ -15,15 +15,15 @@ import com.example.demo.presentation.forms.UserLoginForm;
 @Controller
 public class AuthController {
 
-    private final AuthenticationUseCase authenticationUseCase;
+    private final AuthenticationService authenticationService;
 
     /**
      * AuthControllerのコンストラクターです。
      *
-     * @param authenticationUseCase 認証ユースケースのインスタンス
+     * @param authenticationService 認証ユースケースのインスタンス
      */
-    public AuthController(AuthenticationUseCase authenticationUseCase) {
-        this.authenticationUseCase = authenticationUseCase;
+    public AuthController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
     /**
@@ -47,7 +47,7 @@ public class AuthController {
      */
     @PostMapping("/login")
     public String login(UserLoginForm loginForm, Model model) {
-        boolean isAuthenticated = authenticationUseCase.authenticate(loginForm.getEmail(), loginForm.getPassword());
+        boolean isAuthenticated = authenticationService.authenticate(loginForm.getEmail(), loginForm.getPassword());
         if (isAuthenticated) {
             return "redirect:/top";
         } else {

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.application.dtos.UserDTO;
-import com.example.demo.application.services.UserService;
+import com.example.demo.application.services.UserUpdateService;
 
 /**
  * ユーザー情報に関するコントローラです。
@@ -14,9 +14,9 @@ import com.example.demo.application.services.UserService;
 @Controller
 public class UserProfileController {
 
-    private final UserService userService;
+    private final UserUpdateService userService;
 
-    public UserProfileController(UserService userService) {
+    public UserProfileController(UserUpdateService userService) {
         this.userService = userService;
     }
 

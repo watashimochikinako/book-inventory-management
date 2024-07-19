@@ -11,13 +11,13 @@ import com.example.demo.domain.entities.User;
 import com.example.demo.domain.repositories.UserRepository;
 
 @Service
-public class UserService {
+public class UserUpdateService {
 
     private final UserUpdateUseCase userUpdateUseCase;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public UserService(UserUpdateUseCase userUpdateUseCase, UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserUpdateService(UserUpdateUseCase userUpdateUseCase, UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userUpdateUseCase = userUpdateUseCase;
         this.userRepository = userRepository;
         this.userMapper = userMapper;

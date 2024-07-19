@@ -30,7 +30,7 @@ public class UserUpdateUseCaseImpl implements UserUpdateUseCase {
     /**
      * 指定された名前、メールアドレス、およびパスワードを使ってユーザー情報の更新を行います。
      *
-     * @param userDTO     ユーザーDTO
+     * @param userDTO ユーザーDTO
      * @return 登録成功の場合はtrue、それ以外の場合はfalse
      */
     @Override

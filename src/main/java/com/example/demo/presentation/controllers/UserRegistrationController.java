@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.application.usecases.UserRegistrationUseCase;
+import com.example.demo.application.services.UserRegistrationService;
 import com.example.demo.presentation.forms.UserRegisterForm;
 
 /**
@@ -14,15 +14,15 @@ import com.example.demo.presentation.forms.UserRegisterForm;
 @Controller
 public class UserRegistrationController {
 
-    private final UserRegistrationUseCase userRegistrationUseCase;
+    private final UserRegistrationService userRegistrationService;
 
     /**
      * UserRegistrationControllerのコンストラクターです。
      *
-     * @param userRegistrationUseCase ユーザー登録ユースケースのインスタンス
+     * @param serRegistrationService ユーザー登録サービスのインスタンス
      */
-    public UserRegistrationController(UserRegistrationUseCase userRegistrationUseCase) {
-        this.userRegistrationUseCase = userRegistrationUseCase;
+    public UserRegistrationController(UserRegistrationService userRegistrationService) {
+        this.userRegistrationService = userRegistrationService;
     }
 
     /**
@@ -47,7 +47,7 @@ public class UserRegistrationController {
     @PostMapping("/register")
     public String registerUser(UserRegisterForm userRegisterForm, Model model) {
         // ユーザー登録処理の実行
-        boolean isRegistered = userRegistrationUseCase.register(
+        boolean isRegistered = userRegistrationService.registerUser(
                 userRegisterForm.getName(),
                 userRegisterForm.getEmail(),
                 userRegisterForm.getPassword());
