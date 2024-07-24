@@ -3,20 +3,20 @@ package com.example.demo.domain.repositories;
 import com.example.demo.domain.entities.User;
 
 /**
- * ユーザーに関するデータアクセスのインターフェースです。
+ * ユーザーに関するデータアクセスを定義するインターフェースです。
  */
 public interface UserRepository {
 
     /**
-     * 指定されたメールアドレスを持つユーザーを検索します。
+     * 指定されたメールアドレスを持つユーザーをデータベースから検索します。
      *
      * @param email ユーザーのメールアドレス
-     * @return メールアドレスに対応するユーザー、存在しない場合はnull
+     * @return メールアドレスに対応するユーザー。ユーザーが存在しない場合は null
      */
     User findByEmail(String email);
 
     /**
-     * 指定されたメールアドレスを持つユーザーが存在するかどうかを確認します。
+     * 指定されたメールアドレスを持つユーザーがデータベースに存在するかどうかを確認します。
      *
      * @param email ユーザーのメールアドレス
      * @return ユーザーが存在する場合は true、存在しない場合は false
@@ -26,8 +26,16 @@ public interface UserRepository {
     /**
      * 新しいユーザーをデータベースに挿入します。
      *
-     * @param user 挿入するユーザー情報
+     * @param user 挿入するユーザーの情報
      * @return 挿入が成功した場合は true、失敗した場合は false
      */
     boolean insert(User user);
+
+    /**
+     * データベース内の既存のユーザー情報を更新します。
+     *
+     * @param user 更新するユーザーの情報
+     * @return 更新が成功した場合は true、失敗した場合は false
+     */
+    boolean update(User user);
 }

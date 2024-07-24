@@ -1,18 +1,18 @@
 package com.example.demo.presentation.forms;
 
 /**
- * ユーザーの登録フォームのデータを保持するクラスです。
+ * ユーザーの更新フォームのデータを保持するクラスです。
  */
-public class UserRegisterForm {
+public class UserUpdateFrom {
 
     private String name;
     private String email;
     private String password;
 
-    public UserRegisterForm() {
+    public UserUpdateFrom() {
     }
 
-    public UserRegisterForm(String name, String email, String password) {
+    public UserUpdateFrom(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -41,4 +41,5 @@ public class UserRegisterForm {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

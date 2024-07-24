@@ -1,18 +1,19 @@
-package com.example.demo.presentation.forms;
+package com.example.demo.application.dtos;
 
 /**
- * ユーザーの登録フォームのデータを保持するクラスです。
+ * ※※※（未使用）※※※
+ * ユーザー登録時に使用するデータ転送オブジェクト（DTO）です。
  */
-public class UserRegisterForm {
+public class UserRegistrationDTO {
 
     private String name;
     private String email;
     private String password;
 
-    public UserRegisterForm() {
+    public UserRegistrationDTO() {
     }
 
-    public UserRegisterForm(String name, String email, String password) {
+    public UserRegistrationDTO(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
