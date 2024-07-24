@@ -49,24 +49,18 @@ public class UserUpdateUseCaseImpl implements UserUpdateUseCase {
 
         // メールアドレスでユーザーを取得
         User user = userRepository.findByEmail(userDTO.getEmail());
-
-        // ユーザーが存在しない場合は更新できない
         if (user == null) {
             return false;
         }
 
-        // 名前が提供されている場合は名前を更新
         if (userDTO.getName() != null && !userDTO.getName().isEmpty()) {
             user.setName(userDTO.getName());
         }
 
-        // 新しいパスワードが提供されている場合はパスワードを更新
         if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         }
 
-        // ユーザー情報をデータベースに更新
-        userRepository.update(user);
-        return true;
+        return userRepository.update(user);
     }
 }

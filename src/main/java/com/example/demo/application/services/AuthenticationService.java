@@ -30,7 +30,6 @@ public class AuthenticationService {
      * @return 認証成功の場合はtrue、それ以外の場合はfalse
      */
     public boolean authenticate(String email, String password) {
-        // 認証ユースケースを呼び出して認証処理を実行
         return authenticationUseCase.authenticate(email, password);
     }
 }

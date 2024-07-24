@@ -1,8 +1,8 @@
 package com.example.demo.application.services;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.application.AuthenticationProvider;
 import com.example.demo.application.dtos.UserDTO;
 import com.example.demo.application.mappers.UserMapper;
 import com.example.demo.application.usecases.UserUpdateUseCase;
@@ -17,17 +17,19 @@ public class UserUpdateService {
 
     private final UserUpdateUseCase userUpdateUseCase;
     private final UserMapper userMapper;
+    private final AuthenticationProvider authenticationProvider;
 
     /**
      * UserUpdateServiceのコンストラクタです。
      * 
      * @param userUpdateUseCase ユーザー情報更新ユースケースのインスタンス
-     * @param userRepository    ユーザーリポジトリのインスタンス
      * @param userMapper        ユーザーマッパーのインスタンス
+     * @param authenticationProvider 認証関連の情報を取得するためのプロバイダー
      */
-    public UserUpdateService(UserUpdateUseCase userUpdateUseCase, UserMapper userMapper) {
+    public UserUpdateService(UserUpdateUseCase userUpdateUseCase, UserMapper userMapper, AuthenticationProvider authenticationProvider) {
         this.userUpdateUseCase = userUpdateUseCase;
         this.userMapper = userMapper;
+        this.authenticationProvider = authenticationProvider;
     }
 
     /**
@@ -36,8 +38,8 @@ public class UserUpdateService {
      * @return 現在のユーザー情報を含むUserDTO
      */
     public UserDTO getCurrentUserDTO() {
-        // セキュリティコンテキストから現在のユーザーのメールアドレスを取得
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        // 認証プロバイダーから現在のユーザーのメールアドレスを取得
+        String email = authenticationProvider.getCurrentUserEmail();
         // ユーザーを取得し、DTOに変換
         User user = userUpdateUseCase.getUserByEmail(email);
         return userMapper.userToUserDTO(user);
@@ -49,7 +51,6 @@ public class UserUpdateService {
      * @param userDTO 更新するユーザー情報を含むUserDTO
      */
     public void updateUser(UserDTO userDTO) {
-        // ユーザー情報更新ユースケースを呼び出してユーザー情報を更新
         userUpdateUseCase.updateUser(userDTO);
     }
 }

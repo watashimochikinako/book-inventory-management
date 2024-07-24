@@ -1,6 +1,5 @@
 package com.example.demo.application.services;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.application.usecases.UserDeleteUseCase;
@@ -29,9 +28,6 @@ public class UserDeleteService {
      * @return ユーザー削除成功の場合はtrue、それ以外の場合はfalse
      */
     public boolean deleteUser() {
-        // セキュリティコンテキストからメールアドレスを取得
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        // ユーザーを削除
-        return userDeleteUseCase.deleteUser(email);
+        return userDeleteUseCase.deleteUser();
     }
 }

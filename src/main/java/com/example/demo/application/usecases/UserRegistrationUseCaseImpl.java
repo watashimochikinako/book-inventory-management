@@ -18,7 +18,7 @@ public class UserRegistrationUseCaseImpl implements UserRegistrationUseCase {
     /**
      * UserRegistrationUseCaseImplのコンストラクタです。
      *
-     * @param userRepository UserRepositoryのインスタンス
+     * @param userRepository  UserRepositoryのインスタンス
      * @param passwordEncoder PasswordEncoderのインスタンス
      */
     public UserRegistrationUseCaseImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -29,27 +29,32 @@ public class UserRegistrationUseCaseImpl implements UserRegistrationUseCase {
     /**
      * 指定された名前、メールアドレス、およびパスワードを使ってユーザーの登録を行います。
      *
-     * @param name ユーザーの名前
-     * @param email ユーザーのメールアドレス
+     * @param name     ユーザーの名前
+     * @param email    ユーザーのメールアドレス
      * @param password ユーザーのパスワード
      * @return 登録成功の場合はtrue、それ以外の場合はfalse
      */
     @Override
     public boolean registerUser(String name, String email, String password) {
 
-        // パスワードをハッシュ化
-        String encodedPassword = passwordEncoder.encode(password);
+        try {
+            // パスワードをハッシュ化
+            String encodedPassword = passwordEncoder.encode(password);
 
-        // 登録ロジックを実装します
-        if (!userRepository.existsByEmail(email)) {
-            User user = new User();
-            user.setName(name);
-            user.setEmail(email);
-            user.setPassword(encodedPassword);
+            // 登録ロジックを実装します
+            if (!userRepository.existsByEmail(email)) {
+                User user = new User();
+                user.setName(name);
+                user.setEmail(email);
+                user.setPassword(encodedPassword);
 
-            // ユーザーの挿入を試みる
-            return userRepository.insert(user);
-        } else {
+                // ユーザーの挿入を試みる
+                return userRepository.insert(user);
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            // logger.error("User registration failed for email: " + email, e);
             return false;
         }
     }

@@ -31,7 +31,6 @@ public class UserRegistrationService {
      * @return 登録成功の場合はtrue、それ以外の場合はfalse
      */
     public boolean registerUser(String name, String email, String password) {
-        // ユーザー登録ユースケースを呼び出してユーザー登録処理を実行
         return userRegistrationUseCase.registerUser(name, email, password);
     }
 }
