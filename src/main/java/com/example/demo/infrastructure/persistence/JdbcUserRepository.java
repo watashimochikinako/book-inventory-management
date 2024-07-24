@@ -114,6 +114,11 @@ public class JdbcUserRepository implements UserRepository {
         return rowsAffected > 0;
     }
 
+    /**
+     * 指定されたユーザーをデータベースから削除します。
+     *
+     * @param user 削除するユーザー情報
+     */
     @Override
     public void delete(User user) {
         String sql = "DELETE FROM users WHERE email = :email";

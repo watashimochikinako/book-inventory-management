@@ -1,7 +1,7 @@
 package com.example.demo.application.dtos;
 
 /**
- * ユーザーのデータ転送オブジェクト（DTO）を表すクラスです。
+ * ユーザー情報の更新を表すデータ転送オブジェクト（DTO）です。
  */
 public class UserDTO {
 
