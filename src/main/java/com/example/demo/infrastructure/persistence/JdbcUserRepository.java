@@ -106,11 +106,9 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     public boolean update(User user) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(user);
-        String sql = "INSERT INTO users (name, email, password) "
-                + "VALUES (:name, :email, :password) "
-                + "ON CONFLICT (email) DO UPDATE "
-                + "SET name = EXCLUDED.name, password = EXCLUDED.password";
-
+        String sql = "UPDATE users SET name = :name, password = :password "
+            + "WHERE email = :email";
+            
         // ユーザー情報を挿入または更新し、成功したかどうかを返す
         int rowsAffected = template.update(sql, param);
         return rowsAffected > 0;
