@@ -28,6 +28,17 @@ public class UserUpdateUseCaseImpl implements UserUpdateUseCase {
     }
 
     /**
+     * メールアドレスでユーザーを取得します。
+     *
+     * @param email ユーザーのメールアドレス
+     * @return ユーザーDTO オブジェクト
+     */
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    /**
      * 指定された名前、メールアドレス、およびパスワードを使ってユーザー情報の更新を行います。
      *
      * @param userDTO ユーザーDTO
@@ -36,22 +47,25 @@ public class UserUpdateUseCaseImpl implements UserUpdateUseCase {
     @Override
     public boolean update(UserDTO userDTO) {
 
+        // メールアドレスでユーザーを取得
         User user = userRepository.findByEmail(userDTO.getEmail());
 
+        // ユーザーが存在しない場合は更新できない
         if (user == null) {
             return false;
         }
 
+        // 名前が提供されている場合は名前を更新
         if (userDTO.getName() != null && !userDTO.getName().isEmpty()) {
             user.setName(userDTO.getName());
         }
-        if (userDTO.getEmail() != null && !userDTO.getEmail().isEmpty()) {
-            user.setEmail(userDTO.getEmail());
-        }
+
+        // 新しいパスワードが提供されている場合はパスワードを更新
         if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         }
 
+        // ユーザー情報をデータベースに更新
         userRepository.update(user);
         return true;
     }

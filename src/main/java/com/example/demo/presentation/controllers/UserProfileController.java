@@ -32,7 +32,6 @@ public class UserProfileController {
     public String updateUser(UserDTO userDTO, Model model) {
         // ユーザー情報の更新
         userService.updateUser(userDTO);
-        
         return "user-profile";
     }
 

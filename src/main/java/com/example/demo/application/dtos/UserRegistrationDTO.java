@@ -1,6 +1,7 @@
 package com.example.demo.application.dtos;
 
 /**
+ * ※※※（未使用）※※※
  * ユーザー登録時に使用するデータ転送オブジェクト（DTO）です。
  */
 public class UserRegistrationDTO {
