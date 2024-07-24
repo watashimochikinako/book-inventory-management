@@ -8,7 +8,7 @@ public interface AuthenticationUseCase {
     /**
      * 指定されたメールアドレスとパスワードを使って、ユーザーの認証を行います。
      *
-     * @param email ユーザーのメールアドレス
+     * @param email    ユーザーのメールアドレス
      * @param password ユーザーのパスワード
      * @return 認証成功の場合はtrue、それ以外の場合はfalse
      */

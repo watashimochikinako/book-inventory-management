@@ -38,4 +38,11 @@ public interface UserRepository {
      * @return 更新が成功した場合は true、失敗した場合は false
      */
     boolean update(User user);
+
+    /**
+     * ユーザーを削除します。
+     *
+     * @param user 削除するユーザー
+     */
+    void delete(User user);
 }

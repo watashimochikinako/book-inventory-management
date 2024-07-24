@@ -113,4 +113,16 @@ public class JdbcUserRepository implements UserRepository {
         int rowsAffected = template.update(sql, param);
         return rowsAffected > 0;
     }
+
+    /**
+     * 指定されたユーザーをデータベースから削除します。
+     *
+     * @param user 削除するユーザー情報
+     */
+    @Override
+    public void delete(User user) {
+        String sql = "DELETE FROM users WHERE email = :email";
+        SqlParameterSource param = new MapSqlParameterSource("email", user.getEmail());
+        template.update(sql, param);
+    }
 }

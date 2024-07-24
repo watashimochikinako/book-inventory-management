@@ -35,10 +35,16 @@ public class AuthenticationUseCaseImpl implements AuthenticationUseCase {
      */
     @Override
     public boolean authenticate(String email, String password) {
-        User user = userRepository.findByEmail(email);
-        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-            return true;
+        
+        try {
+            User user = userRepository.findByEmail(email);
+            if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            // logger.error("Authentication failed for email: " + email, e);
+            return false;
         }
-        return false;
     }
 }
