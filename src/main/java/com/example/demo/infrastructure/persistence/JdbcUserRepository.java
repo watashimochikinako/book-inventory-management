@@ -113,4 +113,11 @@ public class JdbcUserRepository implements UserRepository {
         int rowsAffected = template.update(sql, param);
         return rowsAffected > 0;
     }
+
+    @Override
+    public void delete(User user) {
+        String sql = "DELETE FROM users WHERE email = :email";
+        SqlParameterSource param = new MapSqlParameterSource("email", user.getEmail());
+        template.update(sql, param);
+    }
 }

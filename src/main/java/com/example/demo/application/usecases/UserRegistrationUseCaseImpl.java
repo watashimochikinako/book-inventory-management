@@ -35,7 +35,7 @@ public class UserRegistrationUseCaseImpl implements UserRegistrationUseCase {
      * @return 登録成功の場合はtrue、それ以外の場合はfalse
      */
     @Override
-    public boolean register(String name, String email, String password) {
+    public boolean registerUser(String name, String email, String password) {
 
         // パスワードをハッシュ化
         String encodedPassword = passwordEncoder.encode(password);

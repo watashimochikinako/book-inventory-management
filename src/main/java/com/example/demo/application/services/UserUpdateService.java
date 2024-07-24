@@ -50,6 +50,6 @@ public class UserUpdateService {
      */
     public void updateUser(UserDTO userDTO) {
         // ユーザー情報更新ユースケースを呼び出してユーザー情報を更新
-        userUpdateUseCase.update(userDTO);
+        userUpdateUseCase.updateUser(userDTO);
     }
 }

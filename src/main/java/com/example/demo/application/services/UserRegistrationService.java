@@ -32,6 +32,6 @@ public class UserRegistrationService {
      */
     public boolean registerUser(String name, String email, String password) {
         // ユーザー登録ユースケースを呼び出してユーザー登録処理を実行
-        return userRegistrationUseCase.register(name, email, password);
+        return userRegistrationUseCase.registerUser(name, email, password);
     }
 }

@@ -8,5 +8,5 @@ import com.example.demo.domain.entities.User;
  */
 public interface UserUpdateUseCase {
     User getUserByEmail(String email);
-    boolean update(UserDTO userDTO);
+    boolean updateUser(UserDTO userDTO);
 }

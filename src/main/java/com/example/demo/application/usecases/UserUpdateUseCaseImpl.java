@@ -45,7 +45,7 @@ public class UserUpdateUseCaseImpl implements UserUpdateUseCase {
      * @return 登録成功の場合はtrue、それ以外の場合はfalse
      */
     @Override
-    public boolean update(UserDTO userDTO) {
+    public boolean updateUser(UserDTO userDTO) {
 
         // メールアドレスでユーザーを取得
         User user = userRepository.findByEmail(userDTO.getEmail());

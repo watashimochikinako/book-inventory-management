@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.application.dtos.UserDTO;
+import com.example.demo.application.services.UserDeleteService;
 import com.example.demo.application.services.UserUpdateService;
 
 /**
@@ -14,16 +15,18 @@ import com.example.demo.application.services.UserUpdateService;
 @Controller
 public class UserProfileController {
 
-    private final UserUpdateService userService;
+    private final UserUpdateService userUpdateService;
+    private final UserDeleteService userDeleteService;
 
-    public UserProfileController(UserUpdateService userService) {
-        this.userService = userService;
+    public UserProfileController(UserUpdateService userUpdateService, UserDeleteService userDeleteService) {
+        this.userUpdateService = userUpdateService;
+        this.userDeleteService = userDeleteService;
     }
 
     @GetMapping("/user-profile")
     public String showUpdateForm(Model model) {
         // 現在のユーザー情報を取得
-        UserDTO userDTO = userService.getCurrentUserDTO();
+        UserDTO userDTO = userUpdateService.getCurrentUserDTO();
         model.addAttribute("userDTO", userDTO);
         return "user-profile";
     }
@@ -31,21 +34,20 @@ public class UserProfileController {
     @PostMapping("/user-profile/update")
     public String updateUser(UserDTO userDTO, Model model) {
         // ユーザー情報の更新
-        userService.updateUser(userDTO);
+        userUpdateService.updateUser(userDTO);
         return "user-profile";
     }
 
-    // ユーザー情報の削除（未実装）
-    /*
     @PostMapping("/user-profile/delete")
     public String deleteUser(Model model) {
-        boolean isDeleted = userService.deleteCurrentUser();
-        if (isDeleted) {
+        boolean success = userDeleteService.deleteUser();
+        if (success) {
+            model.addAttribute("successMessage", "ユーザーが正常に削除されました。");
             return "redirect:/toLogin";
         } else {
-            model.addAttribute("error", "ユーザー情報の削除に失敗しました。");
+            model.addAttribute("errorMessage", "ユーザー削除に失敗しました。");
             return "user-profile";
         }
     }
-    */
+    
 }
