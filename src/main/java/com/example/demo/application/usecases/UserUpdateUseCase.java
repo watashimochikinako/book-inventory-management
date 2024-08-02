@@ -7,14 +7,13 @@ import com.example.demo.domain.entities.User;
  * ユーザー情報更新に関するユースケースのインターフェースです。
  */
 public interface UserUpdateUseCase {
-    
+
     /**
-     * 指定されたメールアドレスでユーザーを取得します。
+     * 現在のユーザー情報を取得します。
      *
-     * @param email ユーザーのメールアドレス
-     * @return ユーザー情報を含むUserオブジェクト
+     * @return 現在のユーザー情報を含むUserオブジェクト
      */
-    User getUserByEmail(String email);
+    User getCurrentUser();
 
     /**
      * ユーザー情報を更新します。

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.application.dtos.UserDTO;
 import com.example.demo.domain.entities.User;
 import com.example.demo.domain.repositories.UserRepository;
+import com.example.demo.domain.security.AuthenticationProvider;
 
 /**
  * ユーザー情報更新に関するユースケースの具体的な実装クラスです。
@@ -15,6 +16,7 @@ public class UserUpdateUseCaseImpl implements UserUpdateUseCase {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationProvider authenticationProvider;
 
     /**
      * userUpdateUseCaseImplのコンストラクタです。
@@ -22,19 +24,22 @@ public class UserUpdateUseCaseImpl implements UserUpdateUseCase {
      * @param userRepository  UserRepositoryのインスタンス
      * @param passwordEncoder PasswordEncoderのインスタンス
      */
-    public UserUpdateUseCaseImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserUpdateUseCaseImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
+            AuthenticationProvider authenticationProvider) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationProvider = authenticationProvider;
     }
 
     /**
-     * メールアドレスでユーザーを取得します。
+     * 現在のユーザー情報を取得します。
      *
-     * @param email ユーザーのメールアドレス
-     * @return ユーザーDTO オブジェクト
+     * @return 現在のユーザー情報を含むUserオブジェクト
      */
     @Override
-    public User getUserByEmail(String email) {
+    public User getCurrentUser() {
+        // 現在のユーザーのメールアドレスを取得
+        String email = authenticationProvider.getCurrentUserEmail();
         return userRepository.findByEmail(email);
     }
 
