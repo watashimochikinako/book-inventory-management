@@ -3,7 +3,7 @@ package com.example.demo.infrastructure.security;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.application.AuthenticationProvider;
+import com.example.demo.domain.security.AuthenticationProvider;
 
 @Component
 public class AuthenticationProviderImpl implements AuthenticationProvider {

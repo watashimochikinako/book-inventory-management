@@ -2,7 +2,6 @@ package com.example.demo.application.services;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.application.AuthenticationProvider;
 import com.example.demo.application.dtos.UserDTO;
 import com.example.demo.application.mappers.UserMapper;
 import com.example.demo.application.usecases.UserUpdateUseCase;
@@ -17,7 +16,6 @@ public class UserUpdateService {
 
     private final UserUpdateUseCase userUpdateUseCase;
     private final UserMapper userMapper;
-    private final AuthenticationProvider authenticationProvider;
 
     /**
      * UserUpdateServiceのコンストラクタです。
@@ -26,10 +24,9 @@ public class UserUpdateService {
      * @param userMapper        ユーザーマッパーのインスタンス
      * @param authenticationProvider 認証関連の情報を取得するためのプロバイダー
      */
-    public UserUpdateService(UserUpdateUseCase userUpdateUseCase, UserMapper userMapper, AuthenticationProvider authenticationProvider) {
+    public UserUpdateService(UserUpdateUseCase userUpdateUseCase, UserMapper userMapper) {
         this.userUpdateUseCase = userUpdateUseCase;
         this.userMapper = userMapper;
-        this.authenticationProvider = authenticationProvider;
     }
 
     /**
@@ -38,10 +35,8 @@ public class UserUpdateService {
      * @return 現在のユーザー情報を含むUserDTO
      */
     public UserDTO getCurrentUserDTO() {
-        // 認証プロバイダーから現在のユーザーのメールアドレスを取得
-        String email = authenticationProvider.getCurrentUserEmail();
         // ユーザーを取得し、DTOに変換
-        User user = userUpdateUseCase.getUserByEmail(email);
+        User user = userUpdateUseCase.getCurrentUser();
         return userMapper.userToUserDTO(user);
     }
 

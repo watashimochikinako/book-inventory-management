@@ -2,9 +2,9 @@ package com.example.demo.application.usecases;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.application.AuthenticationProvider;
 import com.example.demo.domain.entities.User;
 import com.example.demo.domain.repositories.UserRepository;
+import com.example.demo.domain.security.AuthenticationProvider;
 
 /**
  * ユーザー削除に関するユースケースの具体的な実装クラスです。
