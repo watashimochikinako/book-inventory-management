@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>トップページ</title>
+    <title>Top</title>
 </head>
 
 <body>
@@ -12,7 +12,12 @@
         <p th:text="'Welcome, ' + ${username} + '! Hello World'"></p>
         <a th:href="@{/user-profile}">プロファイル</a>
         <a th:href="@{/logout}">ログアウト</a>
+        <!-- 決済ボタンの表示 -->
+        <form action="#" th:action="@{/process-payment}" method="post">
+            <button type="submit">決済する</button>
+        </form>
     </div>
+
     <div th:unless="${loggedIn}">
         <p>Hello World</p>
         <a th:href="@{/toLogin}">ログイン</a>
