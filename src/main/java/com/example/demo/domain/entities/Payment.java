@@ -1,5 +1,8 @@
 package com.example.demo.domain.entities;
 
+/**
+ * 支払い情報を表すエンティティクラスです。
+ */
 public class Payment {
 
     private Long id;

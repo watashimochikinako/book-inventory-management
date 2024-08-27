@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
+/**
+ * 決済フォームのデータを保持するクラスです。
+ */
 public class PaymentForm {
 
     @NotBlank(message = "Card Token ID is required")

@@ -1,7 +1,7 @@
 package com.example.demo.domain.entities;
 
 /**
- * ユーザーエンティティを表すクラスです。
+ * ユーザーを表すエンティティクラスです。
  */
 public class User {
 
