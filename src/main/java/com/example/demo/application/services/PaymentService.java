@@ -13,7 +13,7 @@ public class PaymentService {
         this.paymentUseCase = paymentUseCase;
     }
 
-    public void processPayment() {
-        paymentUseCase.processPayment();
+    public void processPayment(String tokenId, String description, long amount, String currency) {
+        paymentUseCase.processPayment(tokenId, description, amount, currency);
     }
 }

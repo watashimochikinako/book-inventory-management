@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 public class LocalPaymentUseCaseImpl implements PaymentUseCase{
 
     @Override
-    public void processPayment() {
+    public void processPayment(String tokenId, String description, long amount, String currency) {
         System.out.println("Processing payment via local database...");
         // ローカル決済処理のコードをここに追加
+        System.out.println("Description: " + description);
+        System.out.println("Amount: " + amount);
+        System.out.println("Currency: " + currency);
     }
 }
