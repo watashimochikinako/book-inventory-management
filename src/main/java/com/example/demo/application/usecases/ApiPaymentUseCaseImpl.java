@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.exceptions.PaymentException;
-import com.example.demo.domain.payment.PaymentGateway;
+import com.example.demo.domain.payments.PaymentGateway;
 
 /**
  * 外部APIを使用した支払い処理に関するユースケースの実装クラスです。

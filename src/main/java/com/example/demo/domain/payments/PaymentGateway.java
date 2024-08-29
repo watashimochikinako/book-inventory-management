@@ -1,4 +1,4 @@
-package com.example.demo.domain.payment;
+package com.example.demo.domain.payments;
 
 import com.example.demo.domain.exceptions.PaymentException;
 
