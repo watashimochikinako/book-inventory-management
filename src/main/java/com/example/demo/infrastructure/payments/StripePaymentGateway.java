@@ -1,11 +1,11 @@
-package com.example.demo.infrastructure.payment;
+package com.example.demo.infrastructure.payments;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.domain.exceptions.PaymentException;
-import com.example.demo.domain.payment.PaymentGateway;
+import com.example.demo.domain.payments.PaymentGateway;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;

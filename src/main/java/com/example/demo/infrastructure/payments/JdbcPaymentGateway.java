@@ -1,10 +1,18 @@
-package com.example.demo.infrastructure.payment;
+package com.example.demo.infrastructure.payments;
+
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 // import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.example.demo.domain.exceptions.PaymentException;
-import com.example.demo.domain.payment.PaymentGateway;
+import com.example.demo.domain.payments.PaymentGateway;
 
+/**
+ * ローカルデータベースを使用した支払い処理を行うクラスです。
+ */
+@Component
+@Profile("local")
 public class JdbcPaymentGateway implements PaymentGateway{
 
     // private final NamedParameterJdbcTemplate template;
