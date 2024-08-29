@@ -1,6 +1,7 @@
 package com.example.demo.infrastructure.payment;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.domain.exceptions.PaymentException;
@@ -15,6 +16,7 @@ import com.stripe.param.ChargeCreateParams;
  * {@link PaymentGateway} インターフェースを実装し、Stripe の API を使用して決済を処理します。
  */
 @Component
+@Profile("api")
 public class StripePaymentGateway implements PaymentGateway {
 
     /**
