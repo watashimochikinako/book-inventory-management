@@ -9,49 +9,107 @@ import jakarta.validation.constraints.Positive;
  */
 public class PaymentForm {
 
-    @NotBlank(message = "Card Token ID is required")
-    private String tokenId;
+    @NotBlank(message = "Email is required")
+    private String email;
 
-    @NotBlank(message = "Description is required")
-    private String description;
+    @NotBlank(message = "Card Number is required")
+    private String cardNumber;
 
-    @NotNull(message = "Amount is required")
-    @Positive(message = "Amount must be positive")
-    private Long amount;
+    @NotNull(message = "Expiration Month is required")
+    @Positive(message = "Expiration Month must be positive")
+    private Integer expMonth;
 
-    @NotBlank(message = "Currency is required")
-    private String currency;
+    @NotNull(message = "Expiration Year is required")
+    @Positive(message = "Expiration Year must be positive")
+    private Integer expYear;
 
-    public String getTokenId() {
-        return tokenId;
+    @NotBlank(message = "CVC is required")
+    private String cvc;
+
+    @NotBlank(message = "Card Holder is required")
+    private String cardHolder;
+
+    @NotBlank(message = "Country is required")
+    private String country;
+
+    @NotBlank(message = "Product ID is required")
+    private String productId;
+
+    @NotNull(message = "Quantity is required")
+    @Positive(message = "Quantity must be positive")
+    private Integer quantity;
+
+    // Getters and Setters
+
+    public String getEmail() {
+        return email;
     }
 
-    public void setTokenId(String tokenId) {
-        this.tokenId = tokenId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCardNumber() {
+        return cardNumber;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
-    public Long getAmount() {
-        return amount;
+    public Integer getExpMonth() {
+        return expMonth;
     }
 
-    public void setAmount(Long amount) {
-        this.amount = amount;
+    public void setExpMonth(Integer expMonth) {
+        this.expMonth = expMonth;
     }
 
-    public String getCurrency() {
-        return currency;
+    public Integer getExpYear() {
+        return expYear;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setExpYear(Integer expYear) {
+        this.expYear = expYear;
     }
 
+    public String getCvc() {
+        return cvc;
+    }
+
+    public void setCvc(String cvc) {
+        this.cvc = cvc;
+    }
+
+    public String getCardHolder() {
+        return cardHolder;
+    }
+
+    public void setCardHolder(String cardHolder) {
+        this.cardHolder = cardHolder;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 }

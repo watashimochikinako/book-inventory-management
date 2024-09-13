@@ -4,12 +4,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.domain.entities.OrderProduct;
+import com.example.demo.domain.entities.Payment;
 import com.example.demo.domain.exceptions.PaymentException;
 import com.example.demo.domain.payments.PaymentGateway;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
-import com.stripe.model.Charge;
-import com.stripe.param.ChargeCreateParams;
+import com.stripe.model.checkout.Session;
+import com.stripe.param.checkout.SessionCreateParams;
+
+import jakarta.annotation.PostConstruct;
 
 /**
  * Stripe を利用して決済処理を行うための実装クラスです。
@@ -19,41 +23,65 @@ import com.stripe.param.ChargeCreateParams;
 @Profile("api")
 public class StripePaymentGateway implements PaymentGateway {
 
+    @Value("${app.domain}")
+    private String yourDomain;
+
+    @Value("${stripe.api.key}")
+    private String stripeApiKey;
+
     /**
-     * StripePaymentGatewayのコンストラクタです。
-     * 
-     * @param stripeApiKey Stripe の API キー
+     * StripeのAPIキーを初期化します。
      */
-    public StripePaymentGateway(@Value("${stripe.api.key}") String stripeApiKey) {
+    @PostConstruct
+    public void init() {
         Stripe.apiKey = stripeApiKey;
     }
 
     /**
-     * 指定されたパラメータで決済処理を行います。
-     * Stripe の API を使って決済を実行し、決済 ID を出力します。
+     * APIプロファイルの場合、Stripe Checkoutページにリダイレクトします。
      * 
-     * @param tokenId     決済トークン ID
-     * @param description 決済の説明
-     * @param amount      決済金額（最小単位で指定、例えばセント）
-     * @param currency    通貨コード（例：USD）
+     * @param product  商品エンティティ
+     * @param quantity 商品の個数
+     * @return StripeのCheckoutページのURL
      * @throws PaymentException 決済処理中にエラーが発生した場合にスローされます
      */
     @Override
-    public void processPayment(String tokenId, String description, long amount, String currency) {
-
+    public String processPayment(OrderProduct orderProduct) throws PaymentException {
         try {
-            ChargeCreateParams params = ChargeCreateParams.builder()
-                    .setAmount(amount)
-                    .setCurrency(currency)
-                    .setDescription(description)
-                    .setSource(tokenId)
+            SessionCreateParams params = SessionCreateParams.builder()
+                    .setMode(SessionCreateParams.Mode.PAYMENT)
+                    .setSuccessUrl(yourDomain + "/payment-success")
+                    .setCancelUrl(yourDomain + "/payment-cancel")
+                    .addLineItem(
+                        SessionCreateParams.LineItem.builder()
+                            .setPrice(orderProduct.getPriceId())
+                            .setQuantity((long) orderProduct.getQuantity())
+                            .build())
                     .build();
 
-            Charge charge = Charge.create(params);
-            System.out.println("Charge ID: " + charge.getId());
+            // Create Stripe Checkout Session
+            Session session = Session.create(params);
+            String checkoutUrl = session.getUrl();
+
+            // リダイレクトURLをログに出力
+            System.out.println("Redirect to: " + checkoutUrl);
+
+            // StripeのチェックアウトURLを返す
+            return checkoutUrl;
 
         } catch (StripeException e) {
-            throw new PaymentException("Payment failed: " + e.getMessage(), e);
+            throw new PaymentException("Stripe API Error: " + e.getMessage(), e);
         }
+    }
+
+    /**
+     * ローカルプロファイルでの決済処理はサポートしていません。
+     * 
+     * @param payment  決済エンティティ
+     * @throws PaymentException 決済処理中にエラーが発生した場合にスローされます
+     */
+    @Override
+    public void processPayment(Payment payment) throws PaymentException {
+        throw new UnsupportedOperationException("Local payment processing is not supported in the API profile.");
     }
 }

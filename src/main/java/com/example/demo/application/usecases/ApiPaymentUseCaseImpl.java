@@ -3,6 +3,8 @@ package com.example.demo.application.usecases;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.domain.entities.OrderProduct;
+import com.example.demo.domain.entities.Payment;
 import com.example.demo.domain.exceptions.PaymentException;
 import com.example.demo.domain.payments.PaymentGateway;
 
@@ -25,23 +27,29 @@ public class ApiPaymentUseCaseImpl implements PaymentUseCase {
     }
 
     /**
-     * 外部APIを利用して支払い処理を行います。
+     * 外部APIを利用して支払い処理を行います。Stripe CheckoutページのURLを返します。
      *
-     * @param tokenId      支払いソースを表すトークン（例：クレジットカードトークン）
-     * @param description  支払いの説明
-     * @param amount       課金額
-     * @param currency     支払いの通貨
+     * @param product  商品エンティティ
+     * @param quantity 商品の個数
+     * @return StripeのCheckoutページのURL
      */
     @Override
-    public void processPayment(String tokenId, String description, long amount, String currency) {
+    public String processPayment(OrderProduct orderProduct) {
         System.out.println("Processing payment via external API...");
 
         try {
-            paymentGateway.processPayment(tokenId, description, amount, currency);
-            System.out.println("Payment successful");
+            String checkoutUrl = paymentGateway.processPayment(orderProduct);
+            System.out.println("Payment initiated successfully");
+            return checkoutUrl;
         } catch (PaymentException e) {
             e.printStackTrace();
             System.out.println("Payment failed: " + e.getMessage());
+            throw e; // Rethrow exception to be handled by higher-level logic if necessary
         }
+    }
+
+    @Override
+    public void processPayment(Payment payment) {
+        throw new UnsupportedOperationException("This method is not supported in ApiPaymentUseCaseImpl.");
     }
 }

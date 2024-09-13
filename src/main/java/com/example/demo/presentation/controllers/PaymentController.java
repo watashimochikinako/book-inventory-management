@@ -4,11 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.application.services.PaymentService;
+import com.example.demo.domain.entities.OrderProduct;
+import com.example.demo.domain.entities.Payment;
 import com.example.demo.presentation.forms.PaymentForm;
 
 /**
@@ -19,61 +21,61 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
-    /**
-     * PaymentControllerのコンストラクターです。
-     * 
-     * @param paymentService 決済処理を担当するサービスクラス
-     */
     public PaymentController(PaymentService paymentService) {
         this.paymentService = paymentService;
     }
 
-    /**
-     * 決済フォームを表示します。
-     * 
-     * @param model モデルオブジェクト
-     * @return 決済フォームのビュー名
-     */
-    @GetMapping("/payment-form")
-    public String showPaymentForm(Model model) {
-        model.addAttribute("paymentForm", new PaymentForm());
-        return "payment-form";
+    @PostMapping("/process-payment")
+    public String processPayment(@ModelAttribute OrderProduct orderProduct, Model model) {
+        // 環境変数からプロファイルを取得
+        String profile = System.getenv("SPRING_PROFILES_ACTIVE");
+
+        if ("api".equals(profile)) {
+            // APIプロファイルの場合、StripeのCheckoutページにリダイレクト
+            String checkoutUrl = paymentService.processPayment(orderProduct);
+            return "redirect:" + checkoutUrl;
+        } else if ("local".equals(profile)) {
+            // ローカルプロファイルの場合、決済フォームに遷移
+            model.addAttribute("orderProduct", orderProduct);
+            return "payment-form";
+        } else {
+            // デフォルトのエラーページ
+            return "error";
+        }
     }
 
-    /**
-     * 決済処理を行います。
-     * フォームから送信された決済情報を基に、決済サービスを呼び出します。
-     * 
-     * @param paymentForm 決済フォームのデータ
-     * @param result バリデーション結果
-     * @param model モデルオブジェクト
-     * @return 成功時は決済成功ページへのリダイレクト、エラーがある場合はフォームページの再表示
-     */
-    @PostMapping("/process-payment")
-    public String processPayment(@Validated PaymentForm paymentForm, BindingResult result, Model model) {
-        
+    @PostMapping("/submit-payment-form")
+    public String submitPaymentForm(@Validated PaymentForm paymentForm, OrderProduct orderProduct, BindingResult result,
+            Model model) {
         if (result.hasErrors()) {
             return "payment-form";
         }
 
-        // 決済処理を呼び出す
-        paymentService.processPayment(
-                paymentForm.getTokenId(),
-                paymentForm.getDescription(),
-                paymentForm.getAmount(),
-                paymentForm.getCurrency()
-        );
+        Payment payment = new Payment();
+        payment.setEmail(paymentForm.getEmail());
+        payment.setCardNumber(paymentForm.getCardNumber());
+        payment.setExpMonth(paymentForm.getExpMonth());
+        payment.setExpYear(paymentForm.getExpYear());
+        payment.setCvc(paymentForm.getCvc());
+        payment.setCardHolder(paymentForm.getCardHolder());
+        payment.setCountry(paymentForm.getCountry());
+
+        // OrderProduct の情報を設定
+        payment.setProductId(orderProduct.getProductId());
+        payment.setQuantity(orderProduct.getQuantity());
+
+        paymentService.processPayment(payment);
 
         return "redirect:/payment-success";
     }
 
-    /**
-     * 決済成功ページを表示します。
-     * 
-     * @return 決済成功ページのビュー名
-     */
     @RequestMapping("/payment-success")
     public String paymentSuccess() {
         return "payment-success";
+    }
+
+    @RequestMapping("/payment-cancel")
+    public String paymentCancel() {
+        return "payment-cancel";
     }
 }

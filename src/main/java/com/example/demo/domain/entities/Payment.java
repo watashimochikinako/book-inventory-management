@@ -12,14 +12,14 @@ public class Payment {
     private String cvc;
     private String cardHolder;
     private String country;
-    private Product product;
+    private Integer productId;
     private int quantity;
 
     public Payment() {
     }
 
     public Payment(String email, String cardNumber, int expMonth, int expYear, String cvc, String cardHolder,
-            String country, Product product, int quantity) {
+            String country, Integer productId, int quantity) {
         this.email = email;
         this.cardNumber = cardNumber;
         this.expMonth = expMonth;
@@ -27,7 +27,7 @@ public class Payment {
         this.cvc = cvc;
         this.cardHolder = cardHolder;
         this.country = country;
-        this.product = product;
+        this.productId = productId;
         this.quantity = quantity;
     }
 
@@ -87,12 +87,12 @@ public class Payment {
         this.country = country;
     }
 
-    public Product getProduct() {
-        return product;
+    public Integer getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 
     public int getQuantity() {
@@ -104,5 +104,4 @@ public class Payment {
     }
 
     
-
 }

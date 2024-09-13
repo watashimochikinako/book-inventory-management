@@ -4,24 +4,26 @@ package com.example.demo.domain.entities;
  * 商品情報を表すエンティティクラスです。
  */
 public class Product {
-    private String id;
+    private Integer id;
     private String name;
     private long price;
+    private String priceId;
 
     public Product() {
     }
 
-    public Product(String id, String name, long price) {
+    public Product(Integer id, String name, long price, String priceId) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.priceId = priceId;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -40,4 +42,14 @@ public class Product {
     public void setPrice(long price) {
         this.price = price;
     }
+
+    public String getPriceId() {
+        return priceId;
+    }
+
+    public void setPriceId(String priceId) {
+        this.priceId = priceId;
+    }
+
+    
 }
