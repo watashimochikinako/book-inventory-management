@@ -12,9 +12,20 @@
         <p th:text="'Welcome, ' + ${username} + '! Hello World'"></p>
         <a th:href="@{/user-profile}">プロファイル</a>
         <a th:href="@{/logout}">ログアウト</a>
-        
-        <form th:action="@{/payment-form}" method="get">
-            <button type="submit">決済フォームへ</button>
+
+        <form action="/process-payment" method="post">
+            <label for="priceId">商品を選択:</label>
+            <select id="priceId" name="priceId" required>
+                <option value="" disabled selected>選択してください</option>
+                <option value="price_1PpKrbCCp0N1FY1zPLUzF9mi">商品A</option>
+                <option value="price_1PxN8nCCp0N1FY1zglxjZWFA">商品X</option>
+                <!-- 他の商品もここに追加 -->
+            </select>
+
+            <label for="quantity">数量:</label>
+            <input type="number" id="quantity" name="quantity" min="1" required>
+
+            <button type="submit">決済へ進む</button>
         </form>
     </div>
 

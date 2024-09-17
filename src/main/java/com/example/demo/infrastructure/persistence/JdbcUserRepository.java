@@ -76,8 +76,8 @@ public class JdbcUserRepository implements UserRepository {
         SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
         String sql = "SELECT COUNT(*) FROM users WHERE email = :email";
 
-        int count = template.queryForObject(sql, param, Integer.class);
-        return count > 0;
+        Integer count = template.queryForObject(sql, param, Integer.class);
+        return count != null && count > 0;
     }
 
     /**
@@ -107,8 +107,8 @@ public class JdbcUserRepository implements UserRepository {
     public boolean update(User user) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(user);
         String sql = "UPDATE users SET name = :name, password = :password "
-            + "WHERE email = :email";
-            
+                + "WHERE email = :email";
+
         // ユーザー情報を挿入または更新し、成功したかどうかを返す
         int rowsAffected = template.update(sql, param);
         return rowsAffected > 0;

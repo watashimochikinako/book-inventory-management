@@ -3,6 +3,10 @@ package com.example.demo.application.usecases;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.domain.entities.OrderProduct;
+import com.example.demo.domain.entities.Payment;
+import com.example.demo.domain.exceptions.PaymentException;
+
 /**
  * ローカル環境での支払い処理に関するユースケースの実装クラスです。
  */
@@ -19,11 +23,13 @@ public class LocalPaymentUseCaseImpl implements PaymentUseCase{
      * @param currency     支払いの通貨
      */
     @Override
-    public void processPayment(String tokenId, String description, long amount, String currency) {
+    public void processPayment(Payment payment) {
         System.out.println("Processing payment via local database...");
         // ローカル決済処理のコードをここに追加
-        System.out.println("Description: " + description);
-        System.out.println("Amount: " + amount);
-        System.out.println("Currency: " + currency);
+    }
+
+    @Override
+    public String processPayment(OrderProduct orderProduct) throws PaymentException {
+        throw new UnsupportedOperationException("Unimplemented method 'processPayment'");
     }
 }

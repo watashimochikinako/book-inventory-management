@@ -5,61 +5,102 @@ package com.example.demo.domain.entities;
  */
 public class Payment {
 
-    private Long id;
-    private String tokenId;
-    private String description;
-    private Long amount;
-    private String currency;
+    private String email;
+    private String cardNumber;
+    private int expMonth;
+    private int expYear;
+    private String cvc;
+    private String cardHolder;
+    private String country;
+    private Integer productId;
+    private int quantity;
 
     public Payment() {
     }
 
-    public Payment(Long id, String tokenId, String description, Long amount, String currency) {
-        this.id = id;
-        this.tokenId = tokenId;
-        this.description = description;
-        this.amount = amount;
-        this.currency = currency;
+    public Payment(String email, String cardNumber, int expMonth, int expYear, String cvc, String cardHolder,
+            String country, Integer productId, int quantity) {
+        this.email = email;
+        this.cardNumber = cardNumber;
+        this.expMonth = expMonth;
+        this.expYear = expYear;
+        this.cvc = cvc;
+        this.cardHolder = cardHolder;
+        this.country = country;
+        this.productId = productId;
+        this.quantity = quantity;
     }
 
-    public Long getId() {
-        return id;
+    public String getEmail() {
+        return email;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getTokenId() {
-        return tokenId;
+    public String getCardNumber() {
+        return cardNumber;
     }
 
-    public void setTokenId(String tokenId) {
-        this.tokenId = tokenId;
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
-    public String getDescription() {
-        return description;
+    public int getExpMonth() {
+        return expMonth;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setExpMonth(int expMonth) {
+        this.expMonth = expMonth;
     }
 
-    public Long getAmount() {
-        return amount;
+    public int getExpYear() {
+        return expYear;
     }
 
-    public void setAmount(Long amount) {
-        this.amount = amount;
+    public void setExpYear(int expYear) {
+        this.expYear = expYear;
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getCvc() {
+        return cvc;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setCvc(String cvc) {
+        this.cvc = cvc;
     }
 
+    public String getCardHolder() {
+        return cardHolder;
+    }
+
+    public void setCardHolder(String cardHolder) {
+        this.cardHolder = cardHolder;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+    
 }
