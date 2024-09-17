@@ -44,8 +44,9 @@ public class UserUpdateService {
      * ユーザー情報を更新します。
      *
      * @param userDTO 更新するユーザー情報を含むUserDTO
+     * @return 
      */
-    public void updateUser(UserDTO userDTO) {
-        userUpdateUseCase.updateUser(userDTO);
+    public boolean updateUser(UserDTO userDTO) {
+        return userUpdateUseCase.updateUser(userDTO);
     }
 }

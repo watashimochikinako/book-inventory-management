@@ -1,18 +1,26 @@
 package com.example.demo.presentation.forms;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 /**
  * ユーザーの更新フォームのデータを保持するクラスです。
  */
-public class UserUpdateFrom {
+public class UserUpdateForm {
 
+    @NotBlank(message = "名前は必須です。")
     private String name;
+
+    @NotBlank(message = "Emailは必須です。")
+    @Email(message = "Emailの形式が正しくありません。")
     private String email;
+
     private String password;
 
-    public UserUpdateFrom() {
+    public UserUpdateForm() {
     }
 
-    public UserUpdateFrom(String name, String email, String password) {
+    public UserUpdateForm(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;

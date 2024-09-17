@@ -1,5 +1,6 @@
 package com.example.demo.presentation.forms;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -9,35 +10,37 @@ import jakarta.validation.constraints.Positive;
  */
 public class PaymentForm {
 
-    @NotBlank(message = "Email is required")
+    @NotBlank(message = "メールアドレスは必須です。")
+    @Email(message = "メールアドレスの形式が正しくありません。")
     private String email;
 
-    @NotBlank(message = "Card Number is required")
+    @NotBlank(message = "カード番号は必須です。")
     private String cardNumber;
 
-    @NotNull(message = "Expiration Month is required")
-    @Positive(message = "Expiration Month must be positive")
+    @NotNull(message = "有効期限（月）は必須です。")
+    @Positive(message = "有効期限（月）は正の値でなければなりません。")
     private Integer expMonth;
 
-    @NotNull(message = "Expiration Year is required")
-    @Positive(message = "Expiration Year must be positive")
+    @NotNull(message = "有効期限（年）は必須です。")
+    @Positive(message = "有効期限（年）は正の値でなければなりません。")
     private Integer expYear;
 
-    @NotBlank(message = "CVC is required")
+    @NotBlank(message = "CVCは必須です。")
     private String cvc;
 
-    @NotBlank(message = "Card Holder is required")
+    @NotBlank(message = "カード名義人は必須です。")
     private String cardHolder;
 
-    @NotBlank(message = "Country is required")
+    @NotBlank(message = "国名は必須です。")
     private String country;
 
-    @NotBlank(message = "Product ID is required")
+    @NotBlank(message = "商品IDは必須です。")
     private String productId;
 
-    @NotNull(message = "Quantity is required")
-    @Positive(message = "Quantity must be positive")
+    @NotNull(message = "数量は必須です。")
+    @Positive(message = "数量は正の値でなければなりません。")
     private Integer quantity;
+
 
     // Getters and Setters
 

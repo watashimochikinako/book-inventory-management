@@ -1,12 +1,23 @@
 package com.example.demo.presentation.forms;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 /**
  * ユーザーの登録フォームのデータを保持するクラスです。
  */
 public class UserRegisterForm {
 
+    @NotBlank(message = "名前は必須です。")
     private String name;
+
+    @NotBlank(message = "Emailは必須です。")
+    @Email(message = "Emailの形式が正しくありません。")
     private String email;
+
+    @NotBlank(message = "パスワードは必須です。")
+    @Size(min = 8, message = "パスワードは少なくとも8文字でなければなりません。")
     private String password;
 
     public UserRegisterForm() {
