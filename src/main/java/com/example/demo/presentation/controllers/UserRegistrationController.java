@@ -54,7 +54,7 @@ public class UserRegistrationController {
 
         // 登録結果による処理
         if (isRegistered) {
-            return "redirect:/login"; // 登録成功時のリダイレクト
+            return "redirect:/toLogin"; // 登録成功時のリダイレクト
         } else {
             model.addAttribute("error", true);
             return "user-register"; // 登録失敗時は登録ページを再表示

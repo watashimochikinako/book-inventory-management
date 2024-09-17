@@ -59,12 +59,10 @@ public class PaymentController {
      * @param paymentForm 決済フォームのデータ
      * @param orderProduct 注文商品エンティティ
      * @param result バリデーション結果
-     * @param model モデル属性
      * @return 決済成功後のリダイレクトURL
      */
     @PostMapping("/submit-payment-form")
-    public String submitPaymentForm(@Validated PaymentForm paymentForm, OrderProduct orderProduct, BindingResult result,
-            Model model) {
+    public String submitPaymentForm(@Validated PaymentForm paymentForm, OrderProduct orderProduct, BindingResult result) {
         if (result.hasErrors()) {
             return "payment-form";
         }
