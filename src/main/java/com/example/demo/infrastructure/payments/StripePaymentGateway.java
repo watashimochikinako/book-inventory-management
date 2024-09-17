@@ -38,12 +38,11 @@ public class StripePaymentGateway implements PaymentGateway {
     }
 
     /**
-     * APIプロファイルの場合、Stripe Checkoutページにリダイレクトします。
+     * APIプロファイルでStripe Checkoutページにリダイレクトします。
      * 
-     * @param product  商品エンティティ
-     * @param quantity 商品の個数
-     * @return StripeのCheckoutページのURL
-     * @throws PaymentException 決済処理中にエラーが発生した場合にスローされます
+     * @param orderProduct 商品エンティティと数量
+     * @return Stripe CheckoutページのURL
+     * @throws PaymentException 決済処理中にエラーが発生した場合
      */
     @Override
     public String processPayment(OrderProduct orderProduct) throws PaymentException {
@@ -59,14 +58,13 @@ public class StripePaymentGateway implements PaymentGateway {
                             .build())
                     .build();
 
-            // Create Stripe Checkout Session
+            // Stripe Checkoutセッションの作成
             Session session = Session.create(params);
             String checkoutUrl = session.getUrl();
 
-            // リダイレクトURLをログに出力
+            // チェックアウトURLをログに出力
             System.out.println("Redirect to: " + checkoutUrl);
 
-            // StripeのチェックアウトURLを返す
             return checkoutUrl;
 
         } catch (StripeException e) {
@@ -75,10 +73,10 @@ public class StripePaymentGateway implements PaymentGateway {
     }
 
     /**
-     * ローカルプロファイルでの決済処理はサポートしていません。
+     * ローカルプロファイルの決済処理はサポートされていません。
      * 
-     * @param payment  決済エンティティ
-     * @throws PaymentException 決済処理中にエラーが発生した場合にスローされます
+     * @param payment 決済エンティティ
+     * @throws PaymentException サポートされていない場合にスローされます
      */
     @Override
     public void processPayment(Payment payment) throws PaymentException {

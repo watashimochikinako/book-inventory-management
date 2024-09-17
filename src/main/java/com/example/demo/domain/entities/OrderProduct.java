@@ -1,5 +1,8 @@
 package com.example.demo.domain.entities;
 
+/**
+ * 注文商品情報を表すエンティティクラスです。
+ */
 public class OrderProduct {
     private Integer id;
     private Integer productId;
@@ -47,7 +50,4 @@ public class OrderProduct {
     public void setPriceId(String priceId) {
         this.priceId = priceId;
     }
-
- 
-
 }

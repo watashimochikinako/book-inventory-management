@@ -12,8 +12,7 @@ public interface PaymentUseCase {
     /**
      * APIプロファイルの場合、Stripe Checkoutページにリダイレクトします。
      *
-     * @param product  商品エンティティ
-     * @param quantity 商品の個数
+     * @param orderProduct 注文商品エンティティ（購入する商品とその個数の情報を持つ）
      * @return StripeのCheckoutページのURL
      * @throws PaymentException 決済処理中にエラーが発生した場合にスローされます
      */
@@ -22,7 +21,7 @@ public interface PaymentUseCase {
     /**
      * ローカルプロファイルの場合、決済情報をDBに保存します。
      *
-     * @param payment  決済エンティティ
+     * @param payment 決済エンティティ（クレジットカードや顧客情報などの決済情報を持つ）
      * @throws PaymentException 決済処理中にエラーが発生した場合にスローされます
      */
     void processPayment(Payment payment) throws PaymentException;

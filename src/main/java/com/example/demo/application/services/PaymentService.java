@@ -27,19 +27,19 @@ public class PaymentService {
     }
 
     /**
-     * 支払い処理を実行します。APIプロファイルの場合、Stripe CheckoutページのURLを返します。
+     * 注文商品に対する支払い処理を実行します。APIプロファイルの場合、Stripe CheckoutページのURLを返します。
      *
-     * @param orderProduct  注文商品エンティティ
-     * @return StripeのCheckoutページのURL
+     * @param orderProduct 注文商品エンティティ（購入する商品とその個数の情報を持つ）
+     * @return StripeのCheckoutページのURL（成功した場合）
      */
     public String processPayment(OrderProduct orderProduct) {
         return paymentUseCase.processPayment(orderProduct);
     }
 
     /**
-     * 支払い処理を実行します。ローカルプロファイルの場合、決済情報をDBに保存します。
+     * ローカルプロファイルの場合、決済処理を実行します。決済情報をローカルデータベースに保存します。
      *
-     * @param payment 決済エンティティ
+     * @param payment 決済エンティティ（クレジットカードや顧客情報などの決済情報を持つ）
      */
     public void processPayment(Payment payment) {
         paymentUseCase.processPayment(payment);

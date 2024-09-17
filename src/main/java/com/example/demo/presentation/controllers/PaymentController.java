@@ -25,6 +25,14 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
+    /**
+     * 注文商品の決済処理を行います。
+     * APIプロファイルの場合、StripeのCheckoutページにリダイレクトし、ローカルプロファイルの場合は決済フォームに遷移します。
+     *
+     * @param orderProduct 注文商品エンティティ
+     * @param model モデル属性
+     * @return 決済処理後のリダイレクトURL
+     */
     @PostMapping("/process-payment")
     public String processPayment(@ModelAttribute OrderProduct orderProduct, Model model) {
         // 環境変数からプロファイルを取得
@@ -39,11 +47,21 @@ public class PaymentController {
             model.addAttribute("orderProduct", orderProduct);
             return "payment-form";
         } else {
-            // デフォルトのエラーページ
+            // プロファイルが不明な場合、エラーページに遷移
             return "error";
         }
     }
 
+    /**
+     * 決済フォームの送信処理を行います。
+     * ユーザーが入力した決済情報を受け取り、ローカルプロファイルで決済処理を行います。
+     *
+     * @param paymentForm 決済フォームのデータ
+     * @param orderProduct 注文商品エンティティ
+     * @param result バリデーション結果
+     * @param model モデル属性
+     * @return 決済成功後のリダイレクトURL
+     */
     @PostMapping("/submit-payment-form")
     public String submitPaymentForm(@Validated PaymentForm paymentForm, OrderProduct orderProduct, BindingResult result,
             Model model) {
@@ -64,16 +82,27 @@ public class PaymentController {
         payment.setProductId(orderProduct.getProductId());
         payment.setQuantity(orderProduct.getQuantity());
 
+        // 決済処理を実行
         paymentService.processPayment(payment);
 
         return "redirect:/payment-success";
     }
 
+    /**
+     * 決済成功ページを表示します。
+     * 
+     * @return 決済成功ページ
+     */
     @RequestMapping("/payment-success")
     public String paymentSuccess() {
         return "payment-success";
     }
 
+    /**
+     * 決済キャンセルページを表示します。
+     * 
+     * @return 決済キャンセルページ
+     */
     @RequestMapping("/payment-cancel")
     public String paymentCancel() {
         return "payment-cancel";
