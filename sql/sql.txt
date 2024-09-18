@@ -8,6 +8,13 @@ create table users (
  , password text not null
 ) ;
 
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,  
+    name VARCHAR(255) NOT NULL,
+    priceId VARCHAR(255) NOT NULL,
+    price DECIMAL(10) NOT NULL
+);
+
 CREATE TABLE payments (
     id SERIAL PRIMARY KEY,        
     email VARCHAR(255) NOT NULL,
