@@ -3,7 +3,8 @@ package com.example.demo.presentation.forms;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 /**
  * 決済フォームのデータを保持するクラスです。
@@ -15,17 +16,16 @@ public class PaymentForm {
     private String email;
 
     @NotBlank(message = "カード番号は必須です。")
+    @Pattern(regexp = "\\d{16}", message = "無効なカード番号です")
     private String cardNumber;
 
     @NotNull(message = "有効期限（月）は必須です。")
-    @Positive(message = "有効期限（月）は正の値でなければなりません。")
     private Integer expMonth;
-
+    
     @NotNull(message = "有効期限（年）は必須です。")
-    @Positive(message = "有効期限（年）は正の値でなければなりません。")
     private Integer expYear;
 
-    @NotBlank(message = "CVCは必須です。")
+    @Size(min = 3, max = 4, message = "CVCは3桁または4桁の数字でなければなりません。")
     private String cvc;
 
     @NotBlank(message = "カード名義人は必須です。")
@@ -34,15 +34,24 @@ public class PaymentForm {
     @NotBlank(message = "国名は必須です。")
     private String country;
 
-    @NotBlank(message = "商品IDは必須です。")
-    private String productId;
+    private String priceId;
+    private int quantity;
 
-    @NotNull(message = "数量は必須です。")
-    @Positive(message = "数量は正の値でなければなりません。")
-    private Integer quantity;
+    public String getPriceId() {
+        return priceId;
+    }
 
+    public void setPriceId(String priceId) {
+        this.priceId = priceId;
+    }
 
-    // Getters and Setters
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public String getEmail() {
         return email;
@@ -98,21 +107,5 @@ public class PaymentForm {
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
     }
 }

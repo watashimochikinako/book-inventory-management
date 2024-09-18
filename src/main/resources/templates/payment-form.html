@@ -10,40 +10,52 @@
 <body>
     <h1>Payment Form</h1>
     <form action="/submit-payment-form" th:object="${paymentForm}" method="post">
+
+        <!-- CSRFトークン -->
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
+        <!-- OrderProduct データを隠しフィールドとして追加 -->
+        <input type="hidden" name="priceId" th:value="${orderProduct.priceId}" />
+        <input type="hidden" name="quantity" th:value="${orderProduct.quantity}" />
+
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" th:field="*{email}" required><br><br>
+        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red"></div>
+        <input type="email" id="email" name="email" th:field="*{email}">
+        <br><br>
 
         <label for="cardNumber">Card Number:</label>
-        <input type="text" id="cardNumber" name="cardNumber" th:field="*{cardNumber}" required><br><br>
+        <div th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}" style="color:red"></div>
+        <input type="text" id="cardNumber" name="cardNumber" th:field="*{cardNumber}">
+        <br><br>
 
         <label for="expMonth">Expiration Month:</label>
-        <input type="text" id="expMonth" name="expMonth" th:field="*{expMonth}" required><br><br>
+        <div th:if="${#fields.hasErrors('expMonth')}" th:errors="*{expMonth}" style="color:red"></div>
+        <input type="number" id="expMonth" name="expMonth" min="1" th:field="*{expMonth}">
+        <br><br>
 
         <label for="expYear">Expiration Year:</label>
-        <input type="text" id="expYear" name="expYear" th:field="*{expYear}" required><br><br>
+        <div th:if="${#fields.hasErrors('expYear')}" th:errors="*{expYear}" style="color:red"></div>
+        <input type="number" id="expYear" name="expYear" min="1" th:field="*{expYear}">
+        <br><br>
 
         <label for="cvc">CVC:</label>
-        <input type="text" id="cvc" name="cvc" th:field="*{cvc}" required><br><br>
+        <div th:if="${#fields.hasErrors('cvc')}" th:errors="*{cvc}" style="color:red"></div>
+        <input type="text" id="cvc" name="cvc" th:field="*{cvc}">
+        <br><br>
 
         <label for="cardHolder">Card Holder:</label>
-        <input type="text" id="cardHolder" name="cardHolder" th:field="*{cardHolder}" required><br><br>
+        <div th:if="${#fields.hasErrors('cardHolder')}" th:errors="*{cardHolder}" style="color:red"></div>
+        <input type="text" id="cardHolder" name="cardHolder" th:field="*{cardHolder}">
+        <br><br>
 
         <label for="country">Country:</label>
-        <input type="text" id="country" name="country" th:field="*{country}" required><br><br>
-
-        <label for="description">Description:</label>
-        <input type="text" id="description" name="description" th:field="*{description}" required><br><br>
-
-        <label for="amount">Amount (in cents):</label>
-        <input type="number" id="amount" name="amount" th:field="*{amount}" required><br><br>
-
-        <label for="currency">Currency (e.g., USD):</label>
-        <input type="text" id="currency" name="currency" th:field="*{currency}" required><br><br>
+        <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}" style="color:red"></div>
+        <input type="text" id="country" name="country" th:field="*{country}">
+        <br><br>
 
         <button type="submit">決済する</button>
     </form>
 </body>
+
 
 </html>

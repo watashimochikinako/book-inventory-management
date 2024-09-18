@@ -8,6 +8,20 @@ create table users (
  , password text not null
 ) ;
 
+CREATE TABLE payments (
+    id SERIAL PRIMARY KEY,        
+    email VARCHAR(255) NOT NULL,
+    card_number VARCHAR(16) NOT NULL,
+    exp_month INT NOT NULL,                  
+    exp_year INT NOT NULL,
+    cvc VARCHAR(4) NOT NULL,
+    card_holder VARCHAR(255) NOT NULL,
+    country VARCHAR(255) NOT NULL,
+    price_id VARCHAR(255) NOT NULL,
+    quantity INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- レコード作成日時、デフォルトは現在のタイムスタンプ
+);
+
 --ユーザー登録(pass:morimori)
 insert into users(name, email, password) 
 values('test', 'test@test.co.jp', password);
