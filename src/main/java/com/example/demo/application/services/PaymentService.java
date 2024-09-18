@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.application.usecases.PaymentUseCase;
 import com.example.demo.domain.entities.OrderProduct;
 import com.example.demo.domain.entities.Payment;
+import com.example.demo.presentation.forms.PaymentForm;
 
 /**
  * 支払い処理に関連するサービスクラスです。
@@ -24,6 +25,27 @@ public class PaymentService {
      */
     public PaymentService(PaymentUseCase paymentUseCase) {
         this.paymentUseCase = paymentUseCase;
+    }
+
+    /**
+     * Paymentオブジェクトの作成と初期化
+     *
+     * @param paymentForm フォームからの入力データ
+     * @param orderProduct 注文商品情報
+     * @return 初期化されたPaymentオブジェクト
+     */
+    public Payment createPayment(PaymentForm paymentForm, OrderProduct orderProduct) {
+        Payment payment = new Payment();
+        payment.setEmail(paymentForm.getEmail());
+        payment.setCardNumber(paymentForm.getCardNumber());
+        payment.setExpMonth(paymentForm.getExpMonth());
+        payment.setExpYear(paymentForm.getExpYear());
+        payment.setCvc(paymentForm.getCvc());
+        payment.setCardHolder(paymentForm.getCardHolder());
+        payment.setCountry(paymentForm.getCountry());
+        payment.setPriceId(orderProduct.getPriceId());
+        payment.setQuantity(orderProduct.getQuantity());
+        return payment;
     }
 
     /**

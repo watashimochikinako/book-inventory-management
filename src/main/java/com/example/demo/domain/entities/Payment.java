@@ -5,6 +5,7 @@ package com.example.demo.domain.entities;
  */
 public class Payment {
 
+    private Integer id;
     private String email;
     private String cardNumber;
     private int expMonth;
@@ -12,14 +13,15 @@ public class Payment {
     private String cvc;
     private String cardHolder;
     private String country;
-    private Integer productId;
+    private String priceId;
     private int quantity;
 
     public Payment() {
     }
 
-    public Payment(String email, String cardNumber, int expMonth, int expYear, String cvc, String cardHolder,
-            String country, Integer productId, int quantity) {
+    public Payment(Integer id, String email, String cardNumber, int expMonth, int expYear, String cvc,
+            String cardHolder, String country, String priceId, int quantity) {
+        this.id = id;
         this.email = email;
         this.cardNumber = cardNumber;
         this.expMonth = expMonth;
@@ -27,8 +29,16 @@ public class Payment {
         this.cvc = cvc;
         this.cardHolder = cardHolder;
         this.country = country;
-        this.productId = productId;
+        this.priceId = priceId;
         this.quantity = quantity;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -87,12 +97,12 @@ public class Payment {
         this.country = country;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public String getPriceId() {
+        return priceId;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setPriceId(String priceId) {
+        this.priceId = priceId;
     }
 
     public int getQuantity() {
@@ -102,5 +112,7 @@ public class Payment {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    
     
 }

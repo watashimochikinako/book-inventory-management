@@ -82,7 +82,7 @@ public class SecurityConfig {
         http.userDetailsService(userDetailsService)
         .csrf(csrf -> csrf
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .ignoringRequestMatchers("/process-payment") // 必要に応じて調整してください
+                .ignoringRequestMatchers("/process-payment", "/submit-payment-form")
             );
 
         return http.build();

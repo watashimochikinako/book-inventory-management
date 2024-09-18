@@ -4,6 +4,7 @@ package com.example.demo.domain.entities;
  * 商品情報を表すエンティティクラスです。
  */
 public class Product {
+    
     private Integer id;
     private String name;
     private long price;
