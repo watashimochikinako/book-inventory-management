@@ -1,15 +1,22 @@
 package com.example.demo.presentation.controllers;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.application.services.PaymentService;
+import com.example.demo.application.services.ProductService;
 import com.example.demo.domain.entities.OrderProduct;
 import com.example.demo.domain.entities.Payment;
+import com.example.demo.domain.entities.Product;
 import com.example.demo.presentation.forms.PaymentForm;
 
 import jakarta.validation.Valid;
@@ -20,30 +27,47 @@ import jakarta.validation.Valid;
 @Controller
 public class PaymentController {
 
+    private final Environment env;
+    private final ProductService productService;
     private final PaymentService paymentService;
 
-    public PaymentController(PaymentService paymentService) {
+    public PaymentController(Environment env, ProductService productService, PaymentService paymentService) {
+        this.env = env;
+        this.productService = productService;
         this.paymentService = paymentService;
     }
 
     /**
+     * 商品選択ページを表示します。
+     * 
+     * @param model モデルに商品リストを追加
+     * @return 商品選択ページのビュー名
+     */
+    @GetMapping("/product-selection")
+    public String showProductSelection(Model model) {
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
+        return "product-selection";
+    }
+
+    /**
      * 注文商品の決済処理を行います。
-     * APIプロファイルの場合、StripeのCheckoutページにリダイレクトし、ローカルプロファイルの場合は決済フォームに遷移します。
-     *
+     * プロファイルに応じて、StripeのCheckoutページにリダイレクトするか、決済フォームに遷移します。
+     * 
      * @param orderProduct 注文商品エンティティ
-     * @param model        モデル属性
-     * @return 決済処理後のリダイレクトURL
+     * @param model モデル属性に決済フォームを追加する場合あり
+     * @return リダイレクトまたは遷移先のビュー名
      */
     @PostMapping("/process-payment")
     public String processPayment(@ModelAttribute OrderProduct orderProduct, Model model) {
-        // 環境変数からプロファイルを取得
-        String profile = System.getenv("SPRING_PROFILES_ACTIVE");
+        // 現在のアクティブなプロファイルを取得
+        String[] activeProfiles = env.getActiveProfiles();
 
-        if ("api".equals(profile)) {
+        if (isApiProfileActive(activeProfiles)) {
             // APIプロファイルの場合、StripeのCheckoutページにリダイレクト
             String checkoutUrl = paymentService.processPayment(orderProduct);
             return "redirect:" + checkoutUrl;
-        } else if ("local".equals(profile)) {
+        } else if (isLocalProfileActive(activeProfiles)) {
             // ローカルプロファイルの場合、決済フォームに遷移
             model.addAttribute("paymentForm", new PaymentForm());
             model.addAttribute("orderProduct", orderProduct);
@@ -56,11 +80,10 @@ public class PaymentController {
 
     /**
      * 決済フォームの送信処理を行います。
-     * ユーザーが入力した決済情報を受け取り、ローカルプロファイルで決済処理を行います。
-     *
-     * @param paymentForm  決済フォームのデータ
+     * 
+     * @param paymentForm 決済フォームのデータ
+     * @param result バリデーション結果
      * @param orderProduct 注文商品エンティティ
-     * @param result       バリデーション結果
      * @return 決済成功後のリダイレクトURL
      */
     @PostMapping("/submit-payment-form")
@@ -69,12 +92,12 @@ public class PaymentController {
             @ModelAttribute("orderProduct") OrderProduct orderProduct) {
 
         if (result.hasErrors()) {
+            // バリデーションエラーがある場合、決済フォームに戻る
             return "payment-form";
         }
 
+        // 決済を作成し、処理を実行
         Payment payment = paymentService.createPayment(paymentForm, orderProduct);
-
-        // 決済処理を実行
         paymentService.processPayment(payment);
 
         return "redirect:/payment-success";
@@ -83,7 +106,7 @@ public class PaymentController {
     /**
      * 決済成功ページを表示します。
      * 
-     * @return 決済成功ページ
+     * @return 決済成功ページのビュー名
      */
     @RequestMapping("/payment-success")
     public String paymentSuccess() {
@@ -93,10 +116,30 @@ public class PaymentController {
     /**
      * 決済キャンセルページを表示します。
      * 
-     * @return 決済キャンセルページ
+     * @return 決済キャンセルページのビュー名
      */
     @RequestMapping("/payment-cancel")
     public String paymentCancel() {
         return "payment-cancel";
+    }
+
+    /**
+     * APIプロファイルがアクティブかどうかを判定します。
+     * 
+     * @param activeProfiles 現在のアクティブプロファイルの配列
+     * @return APIプロファイルがアクティブであれば true、それ以外は false
+     */
+    private boolean isApiProfileActive(String[] activeProfiles) {
+        return Arrays.asList(activeProfiles).contains("api");
+    }
+
+    /**
+     * ローカルプロファイルがアクティブかどうかを判定します。
+     * 
+     * @param activeProfiles 現在のアクティブプロファイルの配列
+     * @return ローカルプロファイルがアクティブであれば true、それ以外は false
+     */
+    private boolean isLocalProfileActive(String[] activeProfiles) {
+        return Arrays.asList(activeProfiles).contains("local");
     }
 }
