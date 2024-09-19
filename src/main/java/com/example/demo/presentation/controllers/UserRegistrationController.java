@@ -21,7 +21,7 @@ public class UserRegistrationController {
     private final UserRegistrationService userRegistrationService;
 
     /**
-     * UserRegistrationControllerのコンストラクターです。
+     * UserRegistrationControllerのコンストラクタ
      *
      * @param serRegistrationService ユーザー登録サービスのインスタンス
      */

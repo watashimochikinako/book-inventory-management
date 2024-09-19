@@ -31,6 +31,10 @@ public class PaymentController {
     private final ProductService productService;
     private final PaymentService paymentService;
 
+    /**
+     * PaymentControllerのコンストラクタ
+     * 
+     */
     public PaymentController(Environment env, ProductService productService, PaymentService paymentService) {
         this.env = env;
         this.productService = productService;

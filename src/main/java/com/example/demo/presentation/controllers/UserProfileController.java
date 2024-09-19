@@ -25,7 +25,10 @@ public class UserProfileController {
     private final UserUpdateService userUpdateService; // ユーザー情報の更新サービス
     private final UserDeleteService userDeleteService; // ユーザー削除サービス
 
-    // コンストラクタインジェクションにより、サービスの依存性を注入
+    /**
+     * UserProfileControllerのコンストラクタ
+     *
+     */
     public UserProfileController(UserUpdateService userUpdateService, UserDeleteService userDeleteService) {
         this.userUpdateService = userUpdateService;
         this.userDeleteService = userDeleteService;
