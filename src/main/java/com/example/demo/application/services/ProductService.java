@@ -9,7 +9,6 @@ import com.example.demo.domain.entities.Product;
 
 /**
  * 商品に関するサービスクラスです。
- * 
  * このクラスはコントローラ層から呼び出され、ユースケースを利用してビジネスロジックを実行します。
  */
 @Service
